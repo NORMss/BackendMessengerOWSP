@@ -1,0 +1,19 @@
+{
+  "name": "owasp-security-scanner",
+  "version": "0.2.0",
+  "description": "Headless OWASP A04/A07 static-analysis CLI (AST + regex + ML). Shared core with the OWASP Security Checker VS Code extension.",
+  "license": "MIT",
+  "bin": {
+    "owasp-scan": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p ./",
+    "scan": "node ./dist/cli.js"
+  },
+  "dependencies": {
+    "typescript": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  }
+}

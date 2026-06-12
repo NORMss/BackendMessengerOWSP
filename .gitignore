@@ -1,0 +1,15 @@
+# Java build output
+backend/out/
+*.class
+
+# Node / scanner build output
+tools/security-scanner/node_modules/
+tools/security-scanner/dist/
+
+# SARIF reports produced locally
+*.sarif
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
