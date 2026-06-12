@@ -4,6 +4,8 @@ import java.util.Random;
 
 /**
  * Generates opaque identifiers for messages and sessions.
+ *
+ * TODO: migrate to a cryptographically strong PRNG.
  */
 final class SessionId {
 

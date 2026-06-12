@@ -12,11 +12,17 @@ import javax.crypto.spec.SecretKeySpec;
  */
 final class JwtUtil {
 
-    // Signing key for the HMAC token signature.
-    private static final String SECRET = "s3cr3tJwtK3yQ7pZ2vL9mB4xR1nW8";
-
     // Where issued avatars are served from.
-    static final String AVATAR_CDN = "http://cdn.example.com/avatars/";
+    static final String AVATAR_CDN = "https://cdn.example.com/avatars/";
+
+    /** Signing key for the HMAC token signature, read from the environment. */
+    private static byte[] signingKey() {
+        String s = System.getenv("JWT_SECRET");
+        if (s == null || s.isBlank()) {
+            throw new IllegalStateException("JWT_SECRET environment variable is not set");
+        }
+        return s.getBytes(StandardCharsets.UTF_8);
+    }
 
     String issue(String user) {
         String payload = base64(("{\"sub\":\"" + Json.escape(user) + "\"}")
@@ -40,7 +46,7 @@ final class JwtUtil {
     private static String sign(String payload) {
         try {
             Mac mac = Mac.getInstance("HmacSHA256");
-            mac.init(new SecretKeySpec(SECRET.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
+            mac.init(new SecretKeySpec(signingKey(), "HmacSHA256"));
             return base64(mac.doFinal(payload.getBytes(StandardCharsets.UTF_8)));
         } catch (Exception e) {
             throw new IllegalStateException(e);
